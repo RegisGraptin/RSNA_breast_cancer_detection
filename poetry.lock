@@ -607,6 +607,17 @@ tf = ["tensorflow"]
 xgb = ["xgboost"]
 
 [[package]]
+name = "efficientnet-pytorch"
+version = "0.7.1"
+description = "EfficientNet implemented in PyTorch."
+category = "main"
+optional = false
+python-versions = ">=3.5.0"
+
+[package.dependencies]
+torch = "*"
+
+[[package]]
 name = "filelock"
 version = "3.9.0"
 description = "A platform independent file lock."
@@ -1503,7 +1514,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "02c016b731f7edf32f2e6913e30afd69119110e5e4c44ccb08c959f4e1aed919"
+content-hash = "9ff8e88bcf4d360e2fb611b2894e54cb3cd4ef9e115ad69af35977b0ef0a7931"
 
 [metadata.files]
 aiohttp = [
@@ -2001,6 +2012,9 @@ dvc-task = [
 dvclive = [
     {file = "dvclive-1.3.2-py3-none-any.whl", hash = "sha256:60fa7dbcb8abbaa0707c4984c1b5bbfff9d3b980a76d26e5b8371057972af6e8"},
     {file = "dvclive-1.3.2.tar.gz", hash = "sha256:0b2996e57aa37c3308d51ef3bf76a8754ea5a749d7ba1f6af4bf94b53a614279"},
+]
+efficientnet-pytorch = [
+    {file = "efficientnet_pytorch-0.7.1.tar.gz", hash = "sha256:00b9b261effce59d2d47aae2ad238c29a2a65175470f41ada7ecac439b7c1ee1"},
 ]
 filelock = [
     {file = "filelock-3.9.0-py3-none-any.whl", hash = "sha256:f58d535af89bb9ad5cd4df046f741f8553a418c01a7856bf0d173bbc9f6bd16d"},

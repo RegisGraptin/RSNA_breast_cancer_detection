@@ -28,6 +28,10 @@ class CustomImageDataset(Dataset):
         self.transform        = transform
         self.target_transform = target_transform
         self.is_dicom         = is_dicom
+        self.ext = ".dcm"
+        
+        if not self.is_dicom:
+            self.ext = ".png"
         
     def __len__(self):
         return len(self.df)
@@ -37,7 +41,7 @@ class CustomImageDataset(Dataset):
         row = self.df.iloc[idx]
         img_path = os.path.join(self.img_dir,
                                 str(row["patient_id"]), 
-                                str(row["image_id"]) + '.dcm')
+                                str(row["image_id"]) + self.ext)
         
         if self.is_dicom:    
            image = open_dicom_image(img_path)

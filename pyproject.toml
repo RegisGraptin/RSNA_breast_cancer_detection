@@ -15,6 +15,7 @@ matplotlib = "^3.6.2"
 torch = "^1.13.1"
 torchvision = "^0.14.1"
 scikit-image = "^0.19.3"
+efficientnet-pytorch = "^0.7.1"
 
 [tool.poetry.dev-dependencies]
 
