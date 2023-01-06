@@ -308,6 +308,14 @@ ssh = ["bcrypt (>=3.1.5)"]
 test = ["pytest (>=6.2.0)", "pytest-benchmark", "pytest-cov", "pytest-subtests", "pytest-xdist", "pretend", "iso8601", "pytz", "hypothesis (>=1.11.4,!=3.79.2)"]
 
 [[package]]
+name = "dicomsdl"
+version = "0.109.1"
+description = "A fast and light-weighted DICOM software development library"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+
+[[package]]
 name = "dictdiffer"
 version = "0.9.0"
 description = "Dictdiffer is a library that helps you to diff and patch dictionaries."
@@ -1181,7 +1189,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4b8ed56dd68b3cd0df05a0634682c78b1c2fea32a6d7611225f48b326985e1e6"
+content-hash = "ce93fc357ef1eb2c033cb0b8d3aee1f3811a6063bd5b993dc8e0b62551fa20f8"
 
 [metadata.files]
 aiohttp = [
@@ -1441,6 +1449,56 @@ cryptography = [
     {file = "cryptography-39.0.0-pp39-pypy39_pp73-manylinux_2_28_x86_64.whl", hash = "sha256:844ad4d7c3850081dffba91cdd91950038ee4ac525c575509a42d3fc806b83c8"},
     {file = "cryptography-39.0.0-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:e0a05aee6a82d944f9b4edd6a001178787d1546ec7c6223ee9a848a7ade92e39"},
     {file = "cryptography-39.0.0.tar.gz", hash = "sha256:f964c7dcf7802d133e8dbd1565914fa0194f9d683d82411989889ecd701e8adf"},
+]
+dicomsdl = [
+    {file = "dicomsdl-0.109.1-cp27-cp27m-manylinux2010_i686.whl", hash = "sha256:89586b22cb7d14b0a5a344b1b29859d361651eef61933301c9e413e20fe6d19f"},
+    {file = "dicomsdl-0.109.1-cp27-cp27m-manylinux2010_x86_64.whl", hash = "sha256:94f581398f1a89ed9dbf406ba217062ec7ada2216496e2320b46b7a4b94e47a0"},
+    {file = "dicomsdl-0.109.1-cp27-cp27mu-manylinux2010_i686.whl", hash = "sha256:937b545db7585711602a94b268f1faa3c5f9175dc7baf839715e0b502ba1a0e1"},
+    {file = "dicomsdl-0.109.1-cp27-cp27mu-manylinux2010_x86_64.whl", hash = "sha256:efe50ee2792284706289ef9e82ffaf82fbbe4ff719d53812ef248ef08649f7a4"},
+    {file = "dicomsdl-0.109.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:51d539507c81ae3014435650d57b4d7639beb06a4a72c955fc5056449e3598f2"},
+    {file = "dicomsdl-0.109.1-cp310-cp310-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:68398136b5fa71c85cf3d4ee8f35538804751ff52c42bdcfacdf9fb28c597fac"},
+    {file = "dicomsdl-0.109.1-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:8fffdf3e149f9ec9c1e5e7c6f0de96da605840ffd756175d2c687cec22ec7a3c"},
+    {file = "dicomsdl-0.109.1-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:70c16d6d29a6dbc3b212ffe4539e448401f384b9eec4eb6b64a49b698520693a"},
+    {file = "dicomsdl-0.109.1-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:e1e7902da4322f16dce51c36777cb6fb04e0f9bea62c9bae71813abb9624b87b"},
+    {file = "dicomsdl-0.109.1-cp310-cp310-win32.whl", hash = "sha256:92741083f85e378a01c2550af9aa49f1825146b1ab22962010eaf2e63fd57e3d"},
+    {file = "dicomsdl-0.109.1-cp310-cp310-win_amd64.whl", hash = "sha256:54e69bedc166bd4c4f01d9c3e37f5d9574a1268311288e72fd6c55d17505a70e"},
+    {file = "dicomsdl-0.109.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:4a56d0245f49e915308b8013b327cba892fe80f2af887ba7dea06c6d7818684d"},
+    {file = "dicomsdl-0.109.1-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:556b8df395acb3160bcd349de9e4a91edb14f15194afaac91765fa2b4d9c2f70"},
+    {file = "dicomsdl-0.109.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a9860efcc3d12cf460c686cd91e4f3f33cb483f7c17b6f974d35ae3507515349"},
+    {file = "dicomsdl-0.109.1-cp311-cp311-musllinux_1_1_i686.whl", hash = "sha256:89921773c6f8b413fd7c1236e1533f62f0dbb923b47215eeb8c7510aa0743bd3"},
+    {file = "dicomsdl-0.109.1-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:cf069fce0ce3fef6905bfb48c8a4eb0a44c046a3c77ecc18261bacf7737474dc"},
+    {file = "dicomsdl-0.109.1-cp311-cp311-win32.whl", hash = "sha256:588a6c3c0fdae35ab04254bffd61acb37d6368d02c3127cdbe112cb750dc208c"},
+    {file = "dicomsdl-0.109.1-cp311-cp311-win_amd64.whl", hash = "sha256:194f9e2b79256daa767fd422a96227652ad2f8f690b3ddcbf6d92cf34d9822e4"},
+    {file = "dicomsdl-0.109.1-cp35-cp35m-manylinux2010_i686.whl", hash = "sha256:7d04c99cd7308f877327bc331f49ad5fef1ee1893f5f5a090960a7dce22fa621"},
+    {file = "dicomsdl-0.109.1-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:2b219531d64c9f2c622f67c13a5ffb63cc91b9175843c132a9eea7da452ccac8"},
+    {file = "dicomsdl-0.109.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:31a5f70d786ca22d813cfe0e714f08db9cb75360e2296cab79fec250afcde9a9"},
+    {file = "dicomsdl-0.109.1-cp36-cp36m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:aafadcea7d89fcd47d957a182b05d91aa9a0a9b772c8b8450b1bb2efe06bc36e"},
+    {file = "dicomsdl-0.109.1-cp36-cp36m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:92a507a9f91f42f5c2b7556ed25cd84f1a05bc6e0cb7dc4079afe9daef247bce"},
+    {file = "dicomsdl-0.109.1-cp36-cp36m-musllinux_1_1_i686.whl", hash = "sha256:a34b72dd408e373190e996ecaa44c11976b9106ff567738ee4c9518bd10aa3f7"},
+    {file = "dicomsdl-0.109.1-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:d81c9ec404671bfecbad32160c6f9265a3eeeb31be93046dd73d22bb2cd3d0d3"},
+    {file = "dicomsdl-0.109.1-cp36-cp36m-win32.whl", hash = "sha256:4f398e470b6846c6355f9083340e01e8dfb90c4b80c3245bac1ffeaaae411f64"},
+    {file = "dicomsdl-0.109.1-cp36-cp36m-win_amd64.whl", hash = "sha256:8488eab68d69d55600143d9a2c13a184564630bfda862d0afdc94af37ccc8be5"},
+    {file = "dicomsdl-0.109.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:e8aee2b4dbc3dfeccc866b1fca71d0069dbbe9906303cc0b3c3787e10fb50e68"},
+    {file = "dicomsdl-0.109.1-cp37-cp37m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:1c351eafed96d803a38714b61783e77eb49da45c626825a2d6f2474a4b91444a"},
+    {file = "dicomsdl-0.109.1-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:5b0250fe5f7730f0c1ff2e8ae70eb25ccde85ffd65fb150b8c1523a93b4698b6"},
+    {file = "dicomsdl-0.109.1-cp37-cp37m-musllinux_1_1_i686.whl", hash = "sha256:6100bf6c37d68fca9605c1d9aa421a8e7653b1cdbfb0061f3f278d82c30be136"},
+    {file = "dicomsdl-0.109.1-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:29bebd4bdc0a825fcaeb94eafd63f6228d1f712e4232e90ab38626c12a52f1a5"},
+    {file = "dicomsdl-0.109.1-cp37-cp37m-win32.whl", hash = "sha256:244a91b2f56a7fddb373872cbb6463879e121c28169797330fb47e73d1892a9e"},
+    {file = "dicomsdl-0.109.1-cp37-cp37m-win_amd64.whl", hash = "sha256:b644a547bc3ea63e9aebae2a7e5dad6abd8c15c135519a876b49db6b35d45611"},
+    {file = "dicomsdl-0.109.1-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:6d450799d7efb8c6ec025bb7895f8d19e0275b2cf9aec6209d1be1224e42f3fc"},
+    {file = "dicomsdl-0.109.1-cp38-cp38-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:d7015e56c21bb151818a84b54ecf7bfefb5c5c550b026b294d7ad80fdbdeddb4"},
+    {file = "dicomsdl-0.109.1-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:45a7065385ac9b3efd7a04a5f72ed9ce62ccf6b447a98eeb8eb09bb18dd2fe27"},
+    {file = "dicomsdl-0.109.1-cp38-cp38-musllinux_1_1_i686.whl", hash = "sha256:10186673f6bdbe40a0490518f874a12f6aa40cefae13b1bfbaa390ccaef552dc"},
+    {file = "dicomsdl-0.109.1-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:d11d9f002da668563218c7803b56ef1c838e0c78459f470bc8cd0277101dee58"},
+    {file = "dicomsdl-0.109.1-cp38-cp38-win32.whl", hash = "sha256:c3a049b16c738e461e47c5ef03207130e9c61255409c939591e8716ed06b0287"},
+    {file = "dicomsdl-0.109.1-cp38-cp38-win_amd64.whl", hash = "sha256:179244119e2c570afac48a05b43a22a0c195e407e949e31804db4620c5bf3efb"},
+    {file = "dicomsdl-0.109.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:61509756504e5391b63d015e31c1cc1addcba7cc5476065beffe8064b5d29527"},
+    {file = "dicomsdl-0.109.1-cp39-cp39-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:3e9dbd2f48ec1d2065742e69e5ba728190d6a4d2f922a025c08597f212f9753d"},
+    {file = "dicomsdl-0.109.1-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:0bee0cd6ae88c02df5fdf7cbb2bffa073c6ff1cb6820bcec3fe9bff4b1caff93"},
+    {file = "dicomsdl-0.109.1-cp39-cp39-musllinux_1_1_i686.whl", hash = "sha256:cc4adb0bf57edbeb14c89b4d5de6d00a2a6c97c6baf1cbb1db4b37bd90365f04"},
+    {file = "dicomsdl-0.109.1-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:a5e3941fae96c238534193957369481f43d6b1aeee6c796bb1bc7f71a0476431"},
+    {file = "dicomsdl-0.109.1-cp39-cp39-win32.whl", hash = "sha256:306570b67aafa054a93798026cbea0accac3d65d2b10f7dd6d8491befe9f67ac"},
+    {file = "dicomsdl-0.109.1-cp39-cp39-win_amd64.whl", hash = "sha256:7a0ea0deeb703de9d11e24027d83e9e6189e1b37a8eed7c0213c4d2de27795e7"},
 ]
 dictdiffer = [
     {file = "dictdiffer-0.9.0-py2.py3-none-any.whl", hash = "sha256:442bfc693cfcadaf46674575d2eba1c53b42f5e404218ca2c2ff549f2df56595"},
