@@ -1,0 +1,5 @@
+outs:
+- md5: 7c3198bf09997ec16598bcc2f6d4ca38.dir
+  size: 1039786018
+  nfiles: 54706
+  path: train_images_processed_cv2_dicomsdl_256
