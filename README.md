@@ -18,3 +18,7 @@ https://www.kaggle.com/datasets/radek1/rsna-mammography-images-as-pngs?select=im
 export PYTHONPATH="${PYTHONPATH}:./src/"
 poetry run python ./src/main.py
 ```
+
+## Tracking 
+
+Use MLFlow to track the model.

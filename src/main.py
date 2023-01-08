@@ -9,6 +9,11 @@ from src.image_dataset import CustomImageDataset
 from src.loss import SmoothBCEwLogits
 from src.model import EfficientNetNetwork
 
+import pytorch_lightning as pl
+
+import mlflow.pytorch
+from mlflow import MlflowClient
+
 class Config:
     IMAGE_WIDTH  = 224
     IMAGE_HEIGHT = 224
@@ -58,14 +63,25 @@ if __name__ == "__main__":
                                         "./train_images_processed_cv2_dicomsdl_256/",
                                         is_dicom=False)
 
-    train_generator = torch.utils.data.DataLoader(training_dataset, batch_size=Config.BATCH_SIZE,
+    train_loader = torch.utils.data.DataLoader(training_dataset, batch_size=Config.BATCH_SIZE,
                                             shuffle=True, num_workers=2)
 
     # model = SwinTransformerNetwork(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, 1)
-    model = EfficientNetNetwork(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, Config.TARGET_CLASS_SIZE)
+    model = EfficientNetNetwork(
+        Config.IMAGE_WIDTH, 
+        Config.IMAGE_HEIGHT, 
+        Config.TARGET_CLASS_SIZE,
+        loss = SmoothBCEwLogits(),
+    )
     model = model.to(device)
     
-    optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-    loss = SmoothBCEwLogits()
+    # optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     
-    train(model, optimizer, loss, train_generator)
+    # train the model (hint: here are some helpful Trainer arguments for rapid idea iteration)
+    trainer = pl.Trainer(
+        # limit_train_batches = Config.BATCH_SIZE, 
+        max_epochs          = Config.EPOCHS
+    )
+    trainer.fit(model=model, train_dataloaders=train_loader)
+    
+    

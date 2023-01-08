@@ -4,6 +4,8 @@ import torch.nn as nn
 
 from efficientnet_pytorch import EfficientNet
 
+import pytorch_lightning as pl
+
 class SwinTransformerNetwork(nn.Module):
 
     HUB_URL    = "SharanSMenon/swin-transformer-hub:main"
@@ -35,14 +37,16 @@ class SwinTransformerNetwork(nn.Module):
         output   = self.out(features)
         return output
     
+class EfficientNetNetwork(pl.LightningModule):
 
-class EfficientNetNetwork(nn.Module):
-
-    def __init__(self, width: int, height: int, output_size: int):
+    def __init__(self, width: int, height: int, output_size: int, loss):
         super().__init__()
+        
         self.width       = width
         self.height      = height
         self.output_size = output_size
+        
+        self.loss = loss
         
         # Load the model with 1000 outputs
         self.pretrained_model = EfficientNet.from_pretrained('efficientnet-b2')
@@ -57,3 +61,20 @@ class EfficientNetNetwork(nn.Module):
         features = self.pretrained_model(image)
         output   = self.out(features)
         return output
+
+    def training_step(self, batch, batch_idx):
+        
+        X_batch, Y_batch = batch
+        
+        outputs = self(X_batch)
+        
+        l = self.loss(outputs, Y_batch)
+        
+        # Logging to TensorBoard by default
+        self.log("train_loss", l)
+        
+        return l
+
+    def configure_optimizers(self):
+        return torch.optim.SGD(self.parameters(), lr=0.001, momentum=0.9)
+        # return torch.optim.Adam(self.parameters(), lr=0.02)

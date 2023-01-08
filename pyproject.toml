@@ -16,6 +16,9 @@ torch = "^1.13.1"
 torchvision = "^0.14.1"
 scikit-image = "^0.19.3"
 efficientnet-pytorch = "^0.7.1"
+mlflow = "^2.1.1"
+pytorch-lightning = "^1.8.6"
+protobuf = "3.20.*"
 
 [tool.poetry.dev-dependencies]
 
