@@ -76,6 +76,12 @@ class EfficientNetNetwork(pl.LightningModule):
         
         return l
 
+    def validation_step(self, batch, batch_idx):
+        X_batch, Y_batch = batch
+        Y_pred = self.model(X_batch)
+        l = self.loss(Y_pred, Y_batch)
+        self.log("val_loss", l)
+
     def configure_optimizers(self):
         return torch.optim.SGD(self.parameters(), lr=0.001, momentum=0.9)
         # return torch.optim.Adam(self.parameters(), lr=0.02)

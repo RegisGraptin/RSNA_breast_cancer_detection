@@ -1,9 +1,5 @@
 
-import torch.optim as optim
-
 import torch
-
-from tqdm import tqdm
 
 from src.image_dataset import CustomImageDataset
 from src.loss import SmoothBCEwLogits
@@ -14,10 +10,10 @@ import pytorch_lightning as pl
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import MLFlowLogger
 
-import mlflow.pytorch
-from mlflow import MlflowClient
 
 class Config:
+    
+    RANDOM_SEED = 42
     
     EXPERIMENT_NAME = "efficientnet"
     
@@ -36,11 +32,17 @@ class Config:
 
 if __name__ == "__main__":
 
-    training_dataset = CustomImageDataset("./train.csv", 
+    dataset = CustomImageDataset("./train.csv", 
                                         "./train_images_processed_cv2_dicomsdl_256/",
                                         is_dicom=False)
 
+    training_dataset, validation_dataset = torch.utils.data.random_split(
+        dataset, [0.8, 0.2], generator=torch.Generator().manual_seed(42)
+    )
+
     train_loader = torch.utils.data.DataLoader(training_dataset, batch_size=Config.BATCH_SIZE,
+                                            shuffle=True, num_workers=6)
+    valid_loader = torch.utils.data.DataLoader(validation_dataset, batch_size=Config.BATCH_SIZE,
                                             shuffle=True, num_workers=6)
 
     # model = SwinTransformerNetwork(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, 1)
@@ -64,6 +66,6 @@ if __name__ == "__main__":
         max_epochs          = Config.EPOCHS,
         logger              = mlf_logger,
     )
-    trainer.fit(model=model, train_dataloaders=train_loader)
+    trainer.fit(model=model, train_dataloaders=train_loader, val_dataloaders=valid_loader)
     
     

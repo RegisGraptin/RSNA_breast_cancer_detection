@@ -38,14 +38,13 @@ poetry run mlflow server
 
 Then, you should have a webservice available at http://127.0.0.1:5000/.
 
-*__NOTE__* It will create a `mlruns` folder where the data logs will be there.
+*__NOTE__*: It will create a `mlruns` folder where the data logs will be.
  
 
 ## Training 
 
 
-
-```
+```bash
 export PYTHONPATH="${PYTHONPATH}:./src/"
 poetry run python ./src/main.py
 ```
@@ -53,10 +52,12 @@ poetry run python ./src/main.py
 
 # TODO List
 
-- Clean the README
+[] Clean the README
 [x] PyTorch Model, create Timm model
-- See for image transformation 
-- Improve data pre processing 
+[x] Add validation dataset during the traning
+[] Have Stratified split dataset
+[] See for image transformation 
+[] Improve data pre processing 
 - Clean code
 - See loss + Read paper + Link
 - Try hyperparameters
