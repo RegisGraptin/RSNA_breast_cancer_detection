@@ -39,7 +39,19 @@ class SwinTransformerNetwork(nn.Module):
         output   = self.out(features)
         return output
     
-class EfficientNetNetwork(pl.LightningModule):
+
+
+## Model using EfficientNet
+# self.pretrained_model = EfficientNet.from_pretrained('efficientnet-b2')
+# self.out = nn.Sequential(nn.Linear(1000, 100),
+#                          nn.BatchNorm1d(100),
+#                          nn.ReLU(),
+#                          nn.Dropout(p=0.2),
+#                          nn.Linear(100, self.output_size),
+#                          nn.Softmax(dim=0))
+
+    
+class ResNetNetwork(pl.LightningModule):
 
     def __init__(self, width: int, height: int, output_size: int, loss):
         super().__init__()
@@ -52,13 +64,6 @@ class EfficientNetNetwork(pl.LightningModule):
         
         self.model = timm.create_model('resnet34', num_classes=self.output_size)
         
-        # self.pretrained_model = EfficientNet.from_pretrained('efficientnet-b2')
-        # self.out = nn.Sequential(nn.Linear(1000, 100),
-        #                          nn.BatchNorm1d(100),
-        #                          nn.ReLU(),
-        #                          nn.Dropout(p=0.2),
-        #                          nn.Linear(100, self.output_size),
-        #                          nn.Softmax(dim=0))
         
     def forward(self, image: torch.Tensor) -> torch.Tensor:
         return self.model(image)
