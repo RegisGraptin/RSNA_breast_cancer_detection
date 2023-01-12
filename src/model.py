@@ -2,6 +2,8 @@
 import torch
 import torch.nn as nn
 
+import timm
+
 from efficientnet_pytorch import EfficientNet
 
 import pytorch_lightning as pl
@@ -48,20 +50,19 @@ class EfficientNetNetwork(pl.LightningModule):
         
         self.loss = loss
         
-        # Load the model with 1000 outputs
-        self.pretrained_model = EfficientNet.from_pretrained('efficientnet-b2')
-        self.out = nn.Sequential(nn.Linear(1000, 100),
-                                 nn.BatchNorm1d(100),
-                                 nn.ReLU(),
-                                 nn.Dropout(p=0.2),
-                                 nn.Linear(100, self.output_size),
-                                 nn.Softmax(dim=0))
+        self.model = timm.create_model('resnet34', num_classes=self.output_size)
+        
+        # self.pretrained_model = EfficientNet.from_pretrained('efficientnet-b2')
+        # self.out = nn.Sequential(nn.Linear(1000, 100),
+        #                          nn.BatchNorm1d(100),
+        #                          nn.ReLU(),
+        #                          nn.Dropout(p=0.2),
+        #                          nn.Linear(100, self.output_size),
+        #                          nn.Softmax(dim=0))
         
     def forward(self, image: torch.Tensor) -> torch.Tensor:
-        features = self.pretrained_model(image)
-        output   = self.out(features)
-        return output
-
+        return self.model(image)
+        
     def training_step(self, batch, batch_idx):
         
         X_batch, Y_batch = batch

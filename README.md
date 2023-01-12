@@ -54,7 +54,7 @@ poetry run python ./src/main.py
 # TODO List
 
 - Clean the README
-- PyTorch Model, create Timm model
+[x] PyTorch Model, create Timm model
 - See for image transformation 
 - Improve data pre processing 
 - Clean code
