@@ -11,10 +11,16 @@ from src.model import EfficientNetNetwork
 
 import pytorch_lightning as pl
 
+from pytorch_lightning import Trainer
+from pytorch_lightning.loggers import MLFlowLogger
+
 import mlflow.pytorch
 from mlflow import MlflowClient
 
 class Config:
+    
+    EXPERIMENT_NAME = "efficientnet"
+    
     IMAGE_WIDTH  = 224
     IMAGE_HEIGHT = 224
     
@@ -26,36 +32,7 @@ class Config:
     # mean=[0.485, 0.456, 0.406] and std=[0.229, 0.224, 0.225].
 
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-def train(model, optimizer, model_loss, train_generator):
-    
-    print("Starting training: ", device)
-    
-    for epoch in range(Config.EPOCHS):
-        
-        running_loss = 0.0
-        for i, (X_batch, Y_batch) in enumerate(tqdm(train_generator), 0):
-            # get the inputs; data is a list of [inputs, labels]
-            X_batch, Y_batch = X_batch.to(device), Y_batch.to(device)
-            
-            
-            # zero the parameter gradients
-            optimizer.zero_grad()
-
-            # forward + backward + optimize
-            outputs = model(X_batch)
-            loss = model_loss(outputs, Y_batch)
-            loss.backward()
-            optimizer.step()
-
-            # print statistics
-            running_loss += loss.item()
-            if i % 100 == 99:    # print every 2000 mini-batches
-                print(f'[{epoch + 1}, {i + 1:5d}] loss: {running_loss / 2000:.3f}')
-                running_loss = 0.0
-
-    print('Finished Training')
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 if __name__ == "__main__":
 
@@ -64,7 +41,7 @@ if __name__ == "__main__":
                                         is_dicom=False)
 
     train_loader = torch.utils.data.DataLoader(training_dataset, batch_size=Config.BATCH_SIZE,
-                                            shuffle=True, num_workers=2)
+                                            shuffle=True, num_workers=6)
 
     # model = SwinTransformerNetwork(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, 1)
     model = EfficientNetNetwork(
@@ -73,14 +50,19 @@ if __name__ == "__main__":
         Config.TARGET_CLASS_SIZE,
         loss = SmoothBCEwLogits(),
     )
-    model = model.to(device)
+    # model = model.to(device)
     
     # optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     
+    mlf_logger = MLFlowLogger(experiment_name=Config.EXPERIMENT_NAME, tracking_uri="file:./mlruns")
+    
     # train the model (hint: here are some helpful Trainer arguments for rapid idea iteration)
     trainer = pl.Trainer(
-        # limit_train_batches = Config.BATCH_SIZE, 
-        max_epochs          = Config.EPOCHS
+        # limit_train_batches = Config.BATCH_SIZE,
+        accelerator = 'gpu',
+        devices = 1,
+        max_epochs          = Config.EPOCHS,
+        logger              = mlf_logger,
     )
     trainer.fit(model=model, train_dataloaders=train_loader)
     
