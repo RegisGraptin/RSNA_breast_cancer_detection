@@ -1,0 +1,5 @@
+outs:
+- md5: 4c50a86220f2fe6562afadc79c8ed03a.dir
+  size: 17111908
+  nfiles: 4
+  path: dicom
