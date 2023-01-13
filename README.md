@@ -56,11 +56,12 @@ poetry run python ./src/main.py
 [x] PyTorch Model, create Timm model
 [x] Add validation dataset during the traning
 [] Have Stratified split dataset
-[] See for image transformation 
+[x] See for image transformation 
+[] Add data augmentation 
 [] Improve data pre processing 
-- Clean code
-- See loss + Read paper + Link
-- Try hyperparameters
+[] Clean code
+[] See loss + Read paper + Link
+[] Try hyperparameters
 
 - When first pipeline process -> Go to kaggle experiment (train + inference)
 - Read Kaggle post / previous competitions 

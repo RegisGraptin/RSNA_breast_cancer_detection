@@ -6,6 +6,9 @@ import timm
 
 from efficientnet_pytorch import EfficientNet
 
+from timm.data import resolve_data_config
+from timm.data.transforms_factory import create_transform
+
 import pytorch_lightning as pl
 
 class SwinTransformerNetwork(nn.Module):
@@ -62,8 +65,16 @@ class ResNetNetwork(pl.LightningModule):
         
         self.loss = loss
         
-        self.model = timm.create_model('resnet34', num_classes=self.output_size)
+        self.model = timm.create_model('resnet34', pretrained=True, num_classes=self.output_size)
         
+        # Transform method used from the pretrained network
+        self.transform = create_transform(**resolve_data_config(
+            self.model.pretrained_cfg, 
+            model=self.model)
+        )
+        
+    def transform(self):
+        return self.transform
         
     def forward(self, image: torch.Tensor) -> torch.Tensor:
         return self.model(image)

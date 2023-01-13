@@ -19,16 +19,17 @@ def open_dicom_image(path: str, width: int = 224, height: int = 224):
     img  = image_normalization_min_max(data)
     img  = resize(img, (width, height), anti_aliasing=True)
     img  = np.stack((img,) * 3, axis=-1)
-    img  = img.reshape(3, width, height)
+    img  = img.reshape(width, height, 3)
     return img
 
 def open_png_image(path: str, width: int = 224, height: int = 224):
     img = Image.open(path)
     img = np.asarray(img)
-    img  = image_normalization_min_max(img)
-    img  = resize(img, (width, height), anti_aliasing=True)
-    img  = np.stack((img,) * 3, axis=-1)
-    img  = img.reshape(3, width, height)
+    img = image_normalization_min_max(img)
+    img = resize(img, (width, height), anti_aliasing=True)
+    img = np.stack((img,) * 3, axis=-1)
+    img = img.reshape(width, height, 3)
+    img = img.astype(np.uint8)
     return img
 
 

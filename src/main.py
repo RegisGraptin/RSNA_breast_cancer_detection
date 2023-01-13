@@ -26,16 +26,22 @@ class Config:
     
     ACCELERATOR = "gpu"
     N_DEVICES = 1
-    
-    
-    # mean=[0.485, 0.456, 0.406] and std=[0.229, 0.224, 0.225].
 
 
 if __name__ == "__main__":
 
+    # model = SwinTransformerNetwork(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, 1)
+    model = ResNetNetwork(
+        Config.IMAGE_WIDTH, 
+        Config.IMAGE_HEIGHT, 
+        Config.TARGET_CLASS_SIZE,
+        loss = SmoothBCEwLogits(),
+    )
+        
     dataset = CustomImageDataset("./train.csv", 
                                  "./train_images_processed_cv2_dicomsdl_256/",
-                                 is_dicom=False)
+                                 transform = model.transform,
+                                 is_dicom  = False)
 
     training_dataset, validation_dataset = torch.utils.data.random_split(
         dataset, [0.8, 0.2], generator=torch.Generator().manual_seed(42)
@@ -46,13 +52,6 @@ if __name__ == "__main__":
     valid_loader = torch.utils.data.DataLoader(validation_dataset, batch_size=Config.BATCH_SIZE,
                                             shuffle=True, num_workers=6)
 
-    # model = SwinTransformerNetwork(Config.IMAGE_WIDTH, Config.IMAGE_HEIGHT, 1)
-    model = ResNetNetwork(
-        Config.IMAGE_WIDTH, 
-        Config.IMAGE_HEIGHT, 
-        Config.TARGET_CLASS_SIZE,
-        loss = SmoothBCEwLogits(),
-    )
     
     # Define MLFlow logger
     mlf_logger = MLFlowLogger(
