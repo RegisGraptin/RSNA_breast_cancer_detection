@@ -59,6 +59,8 @@ poetry run python ./src/main.py
 [x] See for image transformation 
 [] Add data augmentation 
 [] Improve data pre processing 
+[] Analyse DICOM images
+[] Crop ROI
 [] Clean code
 [] See loss + Read paper + Link
 [] Try hyperparameters

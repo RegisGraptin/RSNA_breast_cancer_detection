@@ -1,5 +1,5 @@
-/train_images_processed_cv2_dicomsdl_256
-/train.csv
+/data/train_images_processed_cv2_dicomsdl_256
+/data/train.csv
 
 lightning_logs/
 
