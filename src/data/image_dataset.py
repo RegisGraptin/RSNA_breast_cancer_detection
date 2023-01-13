@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 
 from torchvision import transforms
 
-from src.utils import open_dicom_image, open_png_image
+from src.data.utils import open_dicom_image, open_png_image
 
 class CustomImageDataset(Dataset):
     def __init__(self, 

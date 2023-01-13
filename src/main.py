@@ -1,9 +1,9 @@
 
 import torch
 
-from src.image_dataset import CustomImageDataset
-from src.loss import SmoothBCEwLogits
-from src.model import ResNetNetwork
+from src.data.image_dataset import CustomImageDataset
+from src.model.loss import SmoothBCEwLogits
+from src.model.model import ResNetNetwork
 
 import pytorch_lightning as pl
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     train_loader = torch.utils.data.DataLoader(training_dataset, batch_size=Config.BATCH_SIZE,
                                             shuffle=True, num_workers=6)
     valid_loader = torch.utils.data.DataLoader(validation_dataset, batch_size=Config.BATCH_SIZE,
-                                            shuffle=True, num_workers=6)
+                                            shuffle=False, num_workers=6)
 
     
     # Define MLFlow logger
