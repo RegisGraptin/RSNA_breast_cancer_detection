@@ -1,26 +1,18 @@
 
 import glob as glob
 
-import numpy as np
-import dicomsdl as dicom
 import cv2
-
-
+import dicomsdl as dicom
 import matplotlib.pyplot as plt
-
-import pydicom
-from pydicom.pixel_data_handlers.util import apply_voi_lut
-
-from PIL import Image
-
 import numpy as np
+import pydicom
+from PIL import Image
+from pydicom.pixel_data_handlers.util import apply_voi_lut
 from skimage.transform import resize
-
 
 # Additional information on DICOM images 
 ## https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.11.2.html#sect_C.11.2.1.2.1
 ## https://dicom.innolitics.com/ciods/ct-image/voi-lut/00281056
-
 
 
 def image_normalization_min_max(matrix: np.array, EPSILON : np.float32 = 1e-6) -> np.array:
