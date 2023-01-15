@@ -2,6 +2,8 @@
 /data/train.csv
 /data/dicom
 
+/tmp/
+
 lightning_logs/
 
 # Byte-compiled / optimized / DLL files

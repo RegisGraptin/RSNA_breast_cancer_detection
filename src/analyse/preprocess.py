@@ -210,29 +210,19 @@ def preprocess_mammography(path: str, width = 224, height = 224):
     
     
 
-
-
-
-### TODO :: Delete bellow
-
-def open_dicom_image(path: str, width: int = 224, height: int = 224):
-    """Open the dicom image from the path. Normalize & resize."""
-    dset = dicom.open(path)
-    data = dset.pixelData()
-    img  = image_normalization_min_max(data)
-    img  = resize(img, (width, height), anti_aliasing=True)
-    img  = np.stack((img,) * 3, axis=-1)
-    img  = img.reshape(width, height, 3)
-    return img
-
-def open_png_image(path: str, width: int = 224, height: int = 224):
+def test_open_png_image(path: str, width: int = 224, height: int = 224):
+    """Used only for testing purpose. Prefer to use the original dicom file."""
     img = Image.open(path)
     img = np.asarray(img)
     img = image_normalization_min_max(img)
-    img = resize(img, (width, height), anti_aliasing=True)
-    img = np.stack((img,) * 3, axis=-1)
-    img = img.reshape(width, height, 3)
-    img = img.astype(np.uint8)
+    img = crop_image_roi(img)
+    
+    dim1 = img
+    dim3 = image_enhancement_clahe(img, clipLimit=1.0)
+    dim2 = image_enhancement_clahe(img)
+    
+    img = cv2.merge((dim1,dim2,dim3))
+    img = cv2.resize(img, (width, height))
     return img
 
 
