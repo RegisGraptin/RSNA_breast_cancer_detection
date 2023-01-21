@@ -90,7 +90,7 @@ batchsize = 8
 
 ```bash
 export PYTHONPATH="${PYTHONPATH}:./src/"
-poetry run python ./src/main.py
+poetry run python ./src/train.py
 ```
 
 #### Tracking models

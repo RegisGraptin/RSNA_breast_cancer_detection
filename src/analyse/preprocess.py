@@ -15,6 +15,9 @@ from skimage.transform import resize
 ## https://dicom.innolitics.com/ciods/ct-image/voi-lut/00281056
 
 
+# TODO : Create a class object that will manage the data.
+# TODO : Easier to import and load in the future.
+
 def image_normalization_min_max(matrix: np.array, EPSILON : np.float32 = 1e-6) -> np.array:
     """Image normalization by using the min and max.
 
@@ -187,9 +190,39 @@ def image_enhancement_clahe(img: np.array, clipLimit=30.0, tileGridSize=(8,8)):
     )
     return clahe.apply(img)
 
+
+def flip_breast_side(img, breast_side = 'L'):
+    """Flip the breast horizontally on the chosen side 
+
+    https://www.kaggle.com/code/paulbacher/custom-preprocessor-rsna-breast-cancer/notebook
+
+    Args:
+        img (_type_): _description_
+        breast_side (str, optional): _description_. Defaults to 'L'.
+
+    Returns:
+        _type_: _description_
+    """
+    img_breast_side = determine_breast_side(img)
+    if img_breast_side == breast_side:
+        return img
+    else:
+        return np.fliplr(img)
+
+# Determine the current breast side
+def determine_breast_side(img):
+    col_sums_split = np.array_split(np.sum(img, axis=0), 2)
+    left_col_sum = np.sum(col_sums_split[0])
+    right_col_sum = np.sum(col_sums_split[1])
+    if left_col_sum > right_col_sum:
+        return 'L'
+    else:
+        return 'R'
+
 def preprocess_mammography(path: str, width = 224, height = 224):
     img = dicom2array_dicomsdl(path)
     img = image_normalization_min_max(img)
+    img = flip_breast_side(img)
     img = crop_image_roi(img)
     
     dim1 = img
