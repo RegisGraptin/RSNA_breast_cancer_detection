@@ -55,9 +55,8 @@ if __name__ == "__main__":
         
     dataset = CustomImageDataset("./data/train.csv", 
                                  "./data/train_images_processed_cv2_dicomsdl_256/",
-                                 transform = model.transform)
-
-
+                                 transform = model.transform,
+                                 is_dicom  = False)
 
     kf = KFold(n_splits = Config.K_FOLD)
     for i, (training_idx, validation_idx) in enumerate(kf.split(dataset)):

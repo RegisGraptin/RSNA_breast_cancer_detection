@@ -223,7 +223,7 @@ class MammographyPreprocess:
         else:
             return np.fliplr(img)
 
-    def _process_png_image(path: str, width: int, height: int) -> np.array:
+    def _process_png_image(self, path: str, width: int, height: int) -> np.array:
         """Process png image.
 
         Args:

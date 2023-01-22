@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 
 from torchvision import transforms
 
-from src.analyse.preprocess import MammographyPreprocess, preprocess_mammography, test_open_png_image
+from src.analyse.preprocess import MammographyPreprocess
 
 class CustomImageDataset(Dataset):
     def __init__(self, 
@@ -33,6 +33,7 @@ class CustomImageDataset(Dataset):
         self.data_augmentation = data_augmentation
         self.width  = width
         self.height = height
+        self.is_dicom          = is_dicom
         
         self.preprocess = MammographyPreprocess()
         
