@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 
 from torchvision import transforms
 
-from src.analyse.preprocess import preprocess_mammography, test_open_png_image
+from src.analyse.preprocess import MammographyPreprocess, preprocess_mammography, test_open_png_image
 
 class CustomImageDataset(Dataset):
     def __init__(self, 
@@ -33,7 +33,8 @@ class CustomImageDataset(Dataset):
         self.data_augmentation = data_augmentation
         self.width  = width
         self.height = height
-        self.is_dicom          = is_dicom
+        
+        self.preprocess = MammographyPreprocess()
         
         # Define the extention of our files
         self.ext = ".dcm"
@@ -53,12 +54,8 @@ class CustomImageDataset(Dataset):
                                 str(row["patient_id"]), 
                                 str(row["image_id"]) + self.ext)
         
-        # Open the image data
-        if self.is_dicom:    
-           image = preprocess_mammography(img_path, self.width, self.height)
-           
-        else:
-            image = test_open_png_image(img_path, self.width, self.height)
+        # Pre process the image
+        image = self.preprocess.preprocess_mammography(img_path, self.width, self.height)
         
         # Get the label
         label = row['cancer']

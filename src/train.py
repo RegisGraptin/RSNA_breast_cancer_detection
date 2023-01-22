@@ -55,8 +55,7 @@ if __name__ == "__main__":
         
     dataset = CustomImageDataset("./data/train.csv", 
                                  "./data/train_images_processed_cv2_dicomsdl_256/",
-                                 transform = model.transform,
-                                 is_dicom  = False)
+                                 transform = model.transform)
 
 
 
