@@ -1,3 +1,6 @@
+
+.vscode/
+
 /data/train_images_processed_cv2_dicomsdl_256
 /data/train.csv
 /data/dicom

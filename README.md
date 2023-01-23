@@ -26,6 +26,9 @@ Additionally, for the data, we used a Data Version Control with the [`dvc` libra
 
 *__Note__*: Be aware that the DICOM format is not similar as PNG format. In the DICOM format we store the pixel intensity. This pixel is not define on 8 bits as we used to see for png images, but it can be defined by 12~16 bits of information per pixel. If you want more information, you can have a look at the article of [Amrit Virdee](https://towardsdatascience.com/a-matter-of-grayscale-understanding-dicom-windows-1b44344d92bd).
 
+
+For a routine screening clients, we usually have 4 views of screening mammograms. Two mammographies from each side left (L) and right (R). Regarding the views, we have two standards: *bilateral craniocaudal* (CC) and *mediolateral oblique* (MLO) views. But, for some patient, we could limit the raditation exposure and, thus, only 2 MLO views are done. [More information](https://radiopaedia.org/articles/mammography-views). In our dataset, those informations are define by the **laterality** and the **view** data.
+
 ### Additionally Source of Data
 
 As we are using Deep Learning, the data is one of the key factor for the model improvement. Through some research, we can found additional database online providing new data:
