@@ -2,7 +2,7 @@
 import torch
 
 from src.data.image_dataset import CustomImageDataset
-from src.model.loss import SmoothBCEwLogits
+from src.model.loss import FocalLoss, SmoothBCEwLogits
 from src.model.model import ResNetNetwork
 
 import pytorch_lightning as pl
@@ -37,6 +37,9 @@ class Config:
     PATH_IMAGES    = "/home/rere/data/train_transformed/train_images/"
     DATA_IS_DICOM  = False
     
+    LOSS_NAME = "Focal_Loss" 
+    MODEL_LOSS = None
+
 
 
 class Experiment:
@@ -68,7 +71,7 @@ class Experiment:
             Config.IMAGE_WIDTH, 
             Config.IMAGE_HEIGHT, 
             Config.TARGET_CLASS_SIZE,
-            loss = SmoothBCEwLogits(),
+            loss = Config.MODEL_LOSS,
         )
 
     def train_model(self, train_loader, valid_loader, model_path: str = "./", model_id: str = "0"):
@@ -128,6 +131,22 @@ class Experiment:
             num_workers=Config.N_WORKERS
         )
 
+
+
+        print("[*] Length training sets: ", len(training_dataset))
+        print("[*] Length validation sets: ", len(validation_dataset))
+
+        
+
+        
+
+        if Config.LOSS_NAME == "Focal_Loss":
+            alpha = 0.25
+            # n_count = training_dataset.positive_negative_samples()
+            # alpha = n_count[0] / (n_count[1] + n_count[0])
+            Config.MODEL_LOSS = FocalLoss(gamma=2.0, alpha=alpha).forward
+        
+
         self.train_model(train_loader, valid_loader, model_id="0")
 
 
@@ -143,6 +162,7 @@ if __name__ == "__main__":
     dataset = experiment.create_dataset()
 
     print("[*] Size of the dataset: ", len(dataset))
+    print(dataset.positive_negative_samples())
 
     experiment.simple_training(dataset)
         

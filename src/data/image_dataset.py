@@ -45,6 +45,9 @@ class CustomImageDataset(Dataset):
     def __len__(self):
         return len(self.df)
 
+    def positive_negative_samples(self) -> dict:
+        return self.df["cancer"].value_counts().to_dict()
+
     def __getitem__(self, idx):
         
         # Get the row of our dataframe
