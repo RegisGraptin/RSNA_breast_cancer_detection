@@ -31,8 +31,8 @@ class CustomImageDataset(Dataset):
         self.img_dir           = img_dir
         self.transform         = transform
         self.data_augmentation = data_augmentation
-        self.width  = width
-        self.height = height
+        self.width             = width
+        self.height            = height
         self.is_dicom          = is_dicom
         
         self.preprocess = MammographyPreprocess()
@@ -76,6 +76,8 @@ class CustomImageDataset(Dataset):
             image = t(image)            
             image = self.transform(image)
         else:
+            image = image.reshape((3, self.width, self.height))
             image = torch.from_numpy(image)
+            image = image.float()
         
         return image, torch.tensor([label])
