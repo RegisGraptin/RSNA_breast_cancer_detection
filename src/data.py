@@ -12,11 +12,16 @@ class Config:
     IMAGE_WIDTH  = 512
     IMAGE_HEIGHT = 1024
     
-    OUTPUT_PATH = "/tmp/transform-data/"
+    OUTPUT_PATH = "/.../data/train_transformed/"
 
-    DATASET_PATH = "../RAW/train_images/"
+    DATASET_PATH = "/.../data/train_images/"
 
-if __name__ == "__main":
+if __name__ == "__main__":
+    """Script to transform our DICOM files to png files. 
+
+    Allow us to avoid preprocess treatment on our data and to be faster 
+    during the training phases.
+    """
     
     # Create our preprocess class
     mammographyPreprocess = MammographyPreprocess()
@@ -31,7 +36,7 @@ if __name__ == "__main":
     for directory in tqdm.tqdm(directories):
         
         # Get all dicom files
-        dcm_path  = os.path.join(Config.TRAIN_PATH, directory, "*.dcm")
+        dcm_path  = os.path.join(Config.DATASET_PATH, directory, "*.dcm")
         dcm_files = glob.glob(dcm_path)
         
         # Create the folder in the new transform dataset
