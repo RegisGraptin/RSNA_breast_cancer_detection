@@ -84,3 +84,6 @@ class CustomImageDataset(Dataset):
             image = image.float()
         
         return image, torch.tensor([label])
+
+    def y_values(self):
+        return self.df["cancer"].to_numpy()

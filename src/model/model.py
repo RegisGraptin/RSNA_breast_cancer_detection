@@ -65,7 +65,11 @@ class ResNetNetwork(pl.LightningModule):
         
         self.loss = loss
         
-        self.model = timm.create_model('resnet34', pretrained=True, num_classes=self.output_size)
+        self.model = timm.create_model(
+            'resnet34',
+            pretrained=True, 
+            num_classes=self.output_size
+        )
         
         # Transform method used from the pretrained network
         self.transform = create_transform(**resolve_data_config(
@@ -87,7 +91,11 @@ class ResNetNetwork(pl.LightningModule):
         
         l = self.loss(outputs, Y_batch)
         
+        # Compute accuracy
+        acc = (outputs.argmax(dim=-1) == Y_batch).float().mean()
+
         # Logging to TensorBoard by default
+        self.log("train_acc", acc, on_step=False, on_epoch=True)
         self.log("train_loss", l)
         
         return l
@@ -96,8 +104,13 @@ class ResNetNetwork(pl.LightningModule):
         X_batch, Y_batch = batch
         Y_pred = self.model(X_batch)
         l = self.loss(Y_pred, Y_batch)
+
+        labels = Y_pred.argmax(dim=-1)
+        acc = (labels == Y_batch).float().mean()
+
+        self.log("val_acc", acc)
         self.log("val_loss", l)
 
     def configure_optimizers(self):
-        return torch.optim.SGD(self.parameters(), lr=0.001, momentum=0.9)
-        # return torch.optim.Adam(self.parameters(), lr=0.02)
+        # return torch.optim.SGD(self.parameters(), lr=0.0001, momentum=0.9)
+        return torch.optim.Adam(self.parameters(), lr=0.0001)

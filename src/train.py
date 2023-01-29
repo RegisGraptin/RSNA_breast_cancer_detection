@@ -1,9 +1,12 @@
 
 import torch
-
+import numpy as np
 from src.data.image_dataset import CustomImageDataset
 from src.model.loss import FocalLoss, SmoothBCEwLogits
 from src.model.model import ResNetNetwork
+
+
+from exhaustive_weighted_random_sampler import ExhaustiveWeightedRandomSampler
 
 import pytorch_lightning as pl
 
@@ -112,41 +115,65 @@ class Experiment:
             self.train_model(train_loader, valid_loader, model_id=str(i))
 
     def simple_training(self, dataset):
+
+        Y_values = dataset.y_values()
+
+        dataset_size = len(dataset)
+        indices = list(range(dataset_size))
+        split = int(np.floor(0.2 * dataset_size))
         
-        training_dataset, validation_dataset = torch.utils.data.random_split(
-            dataset, [0.8, 0.2], generator=torch.Generator()
+        np.random.seed(Config.RANDOM_SEED)
+        np.random.shuffle(indices)
+
+        train_indices, val_indices = indices[split:], indices[:split]
+
+        train_y, val_y = Y_values[train_indices], Y_values[val_indices]
+
+        train_sampler = ExhaustiveWeightedRandomSampler(
+            train_y, 
+            num_samples = 10000
         )
+        # sampler = DistributedProxySampler(
+        #     ExhaustiveWeightedRandomSampler(train_y, num_samples=10000)
+        # )
+
+        val_sampler  = SequentialSampler(val_indices)
+
+        
+        # loader = DataLoader(dataset, sampler=sampler, ...)
+
+
+
+        # training_dataset, validation_dataset = torch.utils.data.random_split(
+        #     dataset, [0.8, 0.2], generator=torch.Generator()
+        # )
 
         train_loader = torch.utils.data.DataLoader(
-            training_dataset, 
+            dataset, 
+            sampler = train_sampler,
             batch_size=Config.BATCH_SIZE,
-            shuffle=True, 
+            # shuffle=True, 
             num_workers=Config.N_WORKERS
         )
         
         valid_loader = torch.utils.data.DataLoader(
-            validation_dataset, 
+            dataset, 
+            sampler = val_sampler,
             batch_size=Config.BATCH_SIZE,
-            shuffle=False, 
+            # shuffle=False, 
             num_workers=Config.N_WORKERS
         )
 
-
-
-        print("[*] Length training sets: ", len(training_dataset))
-        print("[*] Length validation sets: ", len(validation_dataset))
-
-        
-
-        
+        print("[*] Length training sets: ", len(train_loader))
+        print("[*] Length validation sets: ", len(valid_loader))
 
         if Config.LOSS_NAME == "Focal_Loss":
             alpha = 0.25
-            # n_count = training_dataset.positive_negative_samples()
-            # alpha = n_count[0] / (n_count[1] + n_count[0])
+            # n_count = dataset.positive_negative_samples()
+            # alpha = n_count[1] / (n_count[1] + n_count[0])
+            print("[*] Alpha value: ", str(alpha))
             Config.MODEL_LOSS = FocalLoss(gamma=2.0, alpha=alpha).forward
         
-
         self.train_model(train_loader, valid_loader, model_id="0")
 
 
